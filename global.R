@@ -7,11 +7,13 @@ require('shinydashboard')
 require('extrafont')
 require('plotly')
 
-
-BackTesting <- function(freq)
+#UDF Space 
+BackTesting <- function(freq)     #UDF 1
 {
+  
   InputData <- read.csv("Dataset for R.csv",header=TRUE)    #Load raw file
-  Title <- 
+  
+  Title <-                              #Define the title string
     case_when(
       freq == "Daily" ~ "Daily",
       freq == "Weekly" ~ "Weekly",
@@ -20,7 +22,7 @@ BackTesting <- function(freq)
       freq == "Yearly" ~ "Yearly"
     )
   
-  freq <- subset(InputData,ï..Frequency==freq)
+  freq <- subset(InputData,ï..Frequency==freq)            #Prepare the analysis table
   freq$ï..Frequency <- NULL
   freq$DatePseudo <- as.Date(freq$Date,format='%d/%m/%Y',origin="1970-01-01")
   freq$Date <- as.character(freq$DatePseudo)
@@ -35,7 +37,7 @@ BackTesting <- function(freq)
   
   
   
-  RegressionPlot <-                                                                      #Plot#1
+  RegressionPlot <-                                                                      #Plot 1
     ggplot(data=freq, aes(x=Index.Return, y=ETF.Return)) +           
     geom_point(shape=16,alpha=1/2,colour="magenta") +    
     geom_smooth(method=lm,colour="cyan")+   
@@ -53,10 +55,10 @@ BackTesting <- function(freq)
     labs(x="Date", y="Level")+
     ggtitle("ETF Levels")
   # theme(text=element_text(family="courier new", size = 10))  
-  TimeEvolutionPlots <-                                                                  #Plot#2
+  TimeEvolutionPlots <-                                                                  #Plot 2
     grid.arrange(temp1,temp2,nrow=1)
   
-  ReturnAnalysisPlot <-                                                                  #Plot#3
+  ReturnAnalysisPlot <-                                                                  #Plot 3
     ggplot(data=freq,aes(x=DatePseudo))+                                   
     geom_line(aes(y=Index.Return,color='Index.Return'))+
     labs(x="Date", y="Index Return")+
@@ -74,7 +76,7 @@ BackTesting <- function(freq)
   
 }
 
-MCS <- function(Frequency,NumberofSimulation,StartingPoint)
+MCS <- function(Frequency,NumberofSimulation,StartingPoint) #UDF 2
 {
   Title <- case_when(
     Frequency =="Daily" ~ "Daily",
