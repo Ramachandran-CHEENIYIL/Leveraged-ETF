@@ -1,6 +1,16 @@
+#Preamble
+require('tidyverse') 
+require('gridExtra')
+require('reshape2')
+require('shiny')
+require('shinydashboard')
+require('extrafont')
+require('plotly')
+
+
 BackTesting <- function(freq)
 {
-  
+  InputData <- read.csv("Dataset for R.csv",header=TRUE)    #Load raw file
   Title <- 
     case_when(
       freq == "Daily" ~ "Daily",
